@@ -94,7 +94,6 @@ class RiffusionPipeline(DiffusionPipeline):
             revision="main",
             torch_dtype=dtype,
             # Disable the NSFW filter, causes incorrect false positives
-            # TODO(hayk): Disable the "you have passed a non-standard module" warning from this.
             safety_checker=lambda images, **kwargs: (images, False),
             low_cpu_mem_usage=low_cpu_mem_usage,
             local_files_only=local_files_only,
@@ -169,6 +168,9 @@ class RiffusionPipeline(DiffusionPipeline):
                 return self.UNet2DConditionOutput(sample=sample)
 
         return TracedUNet()
+
+    def set_unet(self, unet):
+        self.unet = unet
 
     @property
     def device(self) -> str:
