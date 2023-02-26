@@ -32,7 +32,7 @@ def read_wav_file(file_path, fs):
 
     return audio_segments
 
-def write_wav_file(audio_data, file_path, fs):
+def write_wav_file(audio_data, file_path, fs, verbose=False):
     with wave.open(file_path, 'w') as wave_file:
         num_channels = 1 # Mono audio
         sample_width = 2 # 16-bit audio
@@ -50,22 +50,67 @@ def write_wav_file(audio_data, file_path, fs):
 
         # Write the audio data to the file
         wave_file.writeframes(audio_data.tobytes())
+    
+    if verbose:
+        print(f"Saved audio file at {file_path} with sampling rate {fs} and length {len(audio_data) / fs:.2f} seconds.")
 
-    print(f'Saved audio file at {file_path} with sampling rate {fs} and length {len(audio_data) / fs:.2f} seconds.')
+## @neelesh: I added this function to your code to make entire batch generation process collable / removed hardcoding of audio to load in 
+'''
+generates spectrograms of all audio files 
+Parameters
+- audio_files: list of strings, where each string is an audio file name (e.g.: ['pop.00000.wav', 'pop.00001.wav'])
+- audio_files_dir: root location of audio files in directory (e.g., for case below: '../pop-data')
+- output_dir: location of where all files will be saved
+- fs: sampling rate, using default = 44100
+- verbose: True will turn on print statements 
 
-# TODO: remove hardcoding of the specific audio file to read in
-audio_segments = read_wav_file('../pop-data/pop.00000.wav', fs=default_fs)
+Saved files located at: 
+<outputdir>
+    <segments> - folder with all .wav segments
+        <audio_file_1>_<segment_1>.wav
+        <audio_file_1>_<segment_2>.wav
+        ...
+        <audio_file_n>_<segment_k>.wav
+    <target> - folder with all .png spectrograms saved
+        <audio_file_1>_<segment_1>.png
+        <audio_file_1>_<segment_2>.png
+        ...
+        <audio_file_n>_<segment_k>.png
+'''
+def generate_specs_batch(audio_files, audio_files_dir, output_dir, fs=44100, verbose=False):
+    segments_dir = os.path.join(output_dir,"segments")
+    os.makedirs(segments_dir, exist_ok=True)
 
-# TODO: make the output directory as subfolders, based on the input audio names
-pop_audio_dir = "./pop_audio_segments"
+    for audio_file in audio_files:
+        audio_filename = audio_file[:audio_file.index(".wav")]
 
-os.makedirs(pop_audio_dir, exist_ok=True)
-for i, segment in enumerate(audio_segments):
-    write_wav_file(segment, f'{pop_audio_dir}/segment_{i}.wav', fs=default_fs)
+        audio_segments = read_wav_file(os.path.join(audio_files_dir, audio_file), fs=fs)
+        for i, segment in enumerate(audio_segments):
+            write_wav_file(segment, os.path.join(segments_dir, f'{audio_filename}_seg_{i}.wav'), fs=fs,  verbose=verbose)
 
-# Log the intermediate audio files as sanity check
-# Function is from riffusion/cli.py
-audio_to_images_batch(audio_dir=pop_audio_dir, output_dir='./output_dir/')
+    # Function is from riffusion/cli.py
+    audio_to_images_batch(audio_dir=segments_dir, output_dir=os.path.join(output_dir, "target"))
+
+    if verbose:
+        print("Segmentation and spectrogram generation complete.")
+
+## REPLACE CODE BLOCK WITH ONE LINE BELOW:
+    # remove hardcoding of the specific audio file to read in
+    # audio_segments = read_wav_file('../pop-data/pop.00000.wav', fs=default_fs)
+
+    # make the output directory as subfolders, based on the input audio names
+    # pop_audio_dir = "./pop_audio_segments"
+
+    # os.makedirs(pop_audio_dir, exist_ok=True)
+    # for i, segment in enumerate(audio_segments):
+    #     write_wav_file(segment, f'{pop_audio_dir}/segment_{i}.wav', fs=default_fs)
+
+    # # Log the intermediate audio files as sanity check
+    # # Function is from riffusion/cli.py
+    # audio_to_images_batch(audio_dir=pop_audio_dir, output_dir='./output_dir/')
+# line commented to prevent running every time import
+    # generate_specs_batch(['pop.00000.wav'], "../pop-data/", "test_dataset")
+
 
 # In progress: Operating demucs on the audio segments to further divide the 5-second clips into stems
 # First, use the first 5 second clip of the very first pop audio as an example
