@@ -84,7 +84,8 @@ def audio_to_images_batch(
         image = converter.spectrogram_image_from_audio(segment)
 
         # Save
-        image_path = audio_paths[ind].with_suffix(image_extension)
+        # print(image_extension)
+        image_path = audio_paths[ind].with_suffix("."+image_extension)
         image_format = {"jpg": "JPEG", "jpeg": "JPEG", "png": "PNG"}[image_extension]
         image.save(image_path, exif=image.getexif(), format=image_format)
 

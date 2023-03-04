@@ -4,6 +4,7 @@ from spleeter.separator import Separator
 from spleeter.audio.adapter import AudioAdapter
 import soundfile as sf
 import numpy as np
+import librosa
 
 valid_stem_counts = [2, 4, 5]
 
@@ -34,6 +35,11 @@ def separate_audio(inp_audio_path, fs, stem_num=2):
     separator = Separator("spleeter:2stems")
     pred_audio_stem = separator.separate(waveform)
     pred_audio_stem["full_audio"] = np.asarray(waveform)
+    
+    pred_audio_stem["accompaniment"] = librosa.to_mono(pred_audio_stem["accompaniment"].T)
+    pred_audio_stem["vocals"] = librosa.to_mono(pred_audio_stem["vocals"].T)
+    
+    
     return pred_audio_stem
 
 def debug_audio_pred_dict(pred_audio_stem, stem_name, fs):

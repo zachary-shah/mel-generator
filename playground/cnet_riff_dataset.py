@@ -4,6 +4,7 @@ import numpy as np
 from torch.utils.data import Dataset
 import os
 from pathlib import Path
+import librosa
 
 # for spectrum generation
 from audio_segment_utils import segment_audio, write_wav_file
@@ -33,15 +34,18 @@ class CnetRiffDataset(Dataset):
         target_filename = item['target']
         prompt = item['prompt']
 
-        source = cv2.imread(os.path.join(self.rootdir, source_filename))
-        target = cv2.imread(os.path.join(self.rootdir, target_filename))
+        print(os.path.join(self.rootdir, source_filename))
+        source = cv2.imread(source_filename)
+        target = cv2.imread(target_filename)
+        
+        print(source, type(source))
 
         # Do not forget that OpenCV read images in BGR order.
-        source = cv2.cvtColor(source, cv2.COLOR_BGR2RGB)
-        target = cv2.cvtColor(target, cv2.COLOR_BGR2RGB)
+        source_mod = cv2.cvtColor(source, cv2.COLOR_BGR2RGB)
+        target_mod = cv2.cvtColor(target, cv2.COLOR_BGR2RGB)
 
         # Normalize source images to [0, 1].
-        source = source.astype(np.float32) / 255.0
+        source_mod = source_mod.astype(np.float32) / 255.0
 
         # Normalize target images to [-1, 1].
         target = (target.astype(np.float32) / 127.5) - 1.0
@@ -79,12 +83,13 @@ def generate_and_replace_canny_source(file_path, low_thres=100, high_thres=200):
     assert low_thres > 1 and high_thres<255, f"Threshold out of bounds; must be between 1 and 255"
     
     # open image
-    accompaniment_spec = cv2.imread(file_path)
+    # print(file_path, type(file_path))
+    accompaniment_spec = cv2.imread(str(file_path))
     # flip color scheme
     accompaniment_spec = cv2.cvtColor(accompaniment_spec, cv2.COLOR_BGR2RGB)
     # run canny edge detection
     source_spec = cv2.Canny(accompaniment_spec, low_thres, high_thres)
-    cv2.imwrite(file_path, source_spec)
+    cv2.imwrite(str(file_path), source_spec)
     
     return
 
@@ -123,28 +128,28 @@ def preprocess_batch(audio_files, audio_files_dir, output_dir, fs=22050, verbose
         # make paths for saving targets
         target_save_paths = []
         for i in range(full_audio_segments.shape[0]):
-            target_save_paths.append(Path(os.path.join(targets_dir, f'{audio_filename}_seg{i}.wav')))
+            target_save_paths.append(Path(os.path.join(targets_dir, f'{audio_filename}_seg{i}.jpg')))
     
         # save target spectrograms
-        riffusion_utils.audio_to_images_batch(segment_arr = full_audio_segments,
-                                             output_paths = target_save_paths,
+        riffusion_utils.audio_to_images_batch(audio_segment_arr = full_audio_segments,
+                                             audio_paths = target_save_paths,
                                              sample_rate = fs)
         
         # save source spectrograms
         source_save_paths = []
         for i in range(accompaniment_audio_segments.shape[0]):
-            source_save_paths.append(Path(os.path.join(sources_dir, f'{audio_filename}_seg{i}.wav')))
-        riffusion_utils.audio_to_images_batch(segment_arr = accompaniment_audio_segments,
-                                             output_paths = source_save_paths,
+            source_save_paths.append(Path(os.path.join(sources_dir, f'{audio_filename}_seg{i}.jpg')))
+        riffusion_utils.audio_to_images_batch(audio_segment_arr = accompaniment_audio_segments,
+                                             audio_paths = source_save_paths,
                                              sample_rate = fs)
         
         # turn sources into canny edges
-        for i in range(len(source_save_paths)):
-            generate_and_replace_canny_source(source_save_paths[i], low_thres=100, high_thres=200)
+        for path in source_save_paths:
+            generate_and_replace_canny_source(path, low_thres=100, high_thres=200)
         
         # append to prompt file
         append_to_prompt_file(rootdir=output_dir, 
-                            source_fileppaths=source_save_paths, 
+                            source_filepaths=source_save_paths, 
                             target_filepaths=target_save_paths,
                             prompt="Generate a pop melody.",
                             verbose=verbose)
