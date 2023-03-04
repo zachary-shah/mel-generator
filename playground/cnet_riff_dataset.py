@@ -8,6 +8,7 @@ from pathlib import Path
 # for spectrum generation
 from spec_segment_gen import generate_specs_batch, segment_audio, write_wav_file
 from external import riffusion_tools
+import spleeter_utils
 
 # training dataset built off reference data with the following structure
 # <rootdir>: fullfile path that contains:
@@ -185,8 +186,10 @@ def preprocess_batch(audio_files, audio_files_dir, output_dir, fs=22050, verbose
     for audio_file in audio_files:
         audio_filename = audio_file[:audio_file.index(".wav")]
 
-        # TODO: get exact spleeter function from neelesh
-        (accompaniment_audio, full_audio) = spleeter_function(os.path.join(audio_files_dir, audio_file), fs=fs)
+        # audio splitting
+        splits = spleeter_utils.separate_audio(os.path.join(audio_files_dir, audio_file), fs=fs, stem_num=2)
+        accompaniment_audio = splits['accompaniment']
+        full_audio = splits['full_audio']
 
         # get audio segments with pitch augmentation on (should be 72 segments total)
         full_audio_segments = segment_audio(full_audio, fs=fs, num_segments=5, pitch_augment=True)
@@ -218,7 +221,7 @@ def preprocess_batch(audio_files, audio_files_dir, output_dir, fs=22050, verbose
                                              sample_rate = fs)
         
         # turn sources into canny edges
-        for i in range(accompaniment_audio_segments.shape[0]):
+        for i in range(len(source_save_paths)):
             generate_and_replace_canny_source(source_save_paths[i], low_thres=100, high_thres=200)
         
         # append to prompt file
