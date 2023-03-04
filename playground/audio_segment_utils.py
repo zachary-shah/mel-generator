@@ -27,7 +27,7 @@ def segment_audio(audio_data, fs=22050, num_segments=5, pitch_augment=True):
     num_samples_per_segment = num_segments * fs 
     num_segments = int(np.ceil(len(audio_data) / num_samples_per_segment))
     
-    print(f"segment_audio: shape: {np.shape(audio_data)}")
+    #print(f"segment_audio: shape: {np.shape(audio_data)}")
     audio_segments = librosa.util.frame(audio_data.T, frame_length=num_samples_per_segment, hop_length=num_samples_per_segment).T
 
     # modulate through 12 keys

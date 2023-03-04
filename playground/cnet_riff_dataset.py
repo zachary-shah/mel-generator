@@ -34,21 +34,20 @@ class CnetRiffDataset(Dataset):
         target_filename = item['target']
         prompt = item['prompt']
 
-        print(os.path.join(self.rootdir, source_filename))
         source = cv2.imread(source_filename)
         target = cv2.imread(target_filename)
         
-        print(source, type(source))
-
-        # Do not forget that OpenCV read images in BGR order.
+        # # Do not forget that OpenCV read images in BGR order.
         source_mod = cv2.cvtColor(source, cv2.COLOR_BGR2RGB)
         target_mod = cv2.cvtColor(target, cv2.COLOR_BGR2RGB)
 
-        # Normalize source images to [0, 1].
+        # # Normalize source images to [0, 1].
         source_mod = source_mod.astype(np.float32) / 255.0
 
-        # Normalize target images to [-1, 1].
-        target = (target.astype(np.float32) / 127.5) - 1.0
+        # # Normalize target images to [-1, 1].
+        target = (target_mod.astype(np.float32) / 127.5) - 1.0
+
+        #TODO: fix normalizations
 
         return dict(jpg=target, txt=prompt, hint=source)
 
@@ -114,30 +113,38 @@ def preprocess_batch(audio_files, audio_files_dir, output_dir, fs=22050, verbose
         accompaniment_audio = splits['accompaniment']
         full_audio = splits['full_audio']
         vocal_audio = splits['vocals']
-        
-        write_wav_file(accompaniment_audio, os.path.join("tmp/", f'{audio_filename}_seg_test_bgnd.wav'), fs=fs,  verbose=verbose)
-        write_wav_file(vocal_audio, os.path.join("tmp/", f'{audio_filename}_seg_test_voc.wav'), fs=fs,  verbose=verbose)
-        write_wav_file(full_audio, os.path.join("tmp/", f'{audio_filename}_seg_test_full.wav'), fs=fs,  verbose=verbose)
 
         # get audio segments with pitch augmentation on (should be 72 segments total)
         full_audio_segments = segment_audio(full_audio, fs=fs, num_segments=5, pitch_augment=True)
         accompaniment_audio_segments = segment_audio(accompaniment_audio, fs=fs, num_segments=5, pitch_augment=True)
         vocal_audio_segments = segment_audio(vocal_audio, fs=fs, num_segments=5, pitch_augment=True)
 
+        # remove segments with low vocal power
+        acceptable_inds = []
+        for i, accompaniment_audio_segment in enumerate(accompaniment_audio_segments):
+                if np.linalg.norm(vocal_audio_segments[i]) > np.linalg.norm(accompaniment_audio_segment)*0.1:
+                    acceptable_inds.append(i)
+                else:
+                    if verbose: print("Vocals not detected, segement " + str(i))
+        full_audio_segments = full_audio_segments[acceptable_inds]
+        accompaniment_audio_segments = accompaniment_audio_segments[acceptable_inds]
+        vocal_audio_segments = vocal_audio_segments[acceptable_inds]
+
+        if verbose:
+            print(f"total number of segments for {audio_filename}: {full_audio_segments.shape[0]}")
 
         # generally, don't save .wav files as this is will require too much storage
         if save_wav:
+            full_clip_dir = os.path.join(output_dir,"full_clips")
+            os.makedirs(full_clip_dir, exist_ok=True)
+            write_wav_file(accompaniment_audio, os.path.join(full_clip_dir, f'{audio_filename}_seg_test_bgnd.wav'), fs=fs,  verbose=verbose)
+            write_wav_file(vocal_audio, os.path.join(full_clip_dir, f'{audio_filename}_seg_test_voc.wav'), fs=fs,  verbose=verbose)
+            write_wav_file(full_audio, os.path.join(full_clip_dir, f'{audio_filename}_seg_test_full.wav'), fs=fs,  verbose=verbose)
+
             for i, accompaniment_audio_segment in enumerate(accompaniment_audio_segments):
-                full_audio_segment = full_audio_segments[i]
-                vocal_audio_segment = vocal_audio_segments[i]
+                write_wav_file(accompaniment_audio_segments[i], os.path.join(segments_dir, f'{audio_filename}_seg{i}_bgnd.wav'), fs=fs,  verbose=verbose)
+                write_wav_file(full_audio_segments[i], os.path.join(segments_dir, f'{audio_filename}_seg{i}_full.wav'), fs=fs,  verbose=verbose)
 
-                if np.linalg.norm(vocal_audio_segment) > np.linalg.norm(accompaniment_audio_segment)*0.1:
-                    write_wav_file(accompaniment_audio_segment, os.path.join(segments_dir, f'{audio_filename}_seg{i}_bgnd.wav'), fs=fs,  verbose=verbose)
-                    write_wav_file(full_audio_segment, os.path.join(segments_dir, f'{audio_filename}_seg{i}_full.wav'), fs=fs,  verbose=verbose)
-                else:
-                    print("Vocals not detected, segement " + str(i))
-
-        
         # make paths for saving targets
         target_save_paths = []
         for i in range(full_audio_segments.shape[0]):
