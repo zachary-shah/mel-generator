@@ -30,18 +30,20 @@ def main():
         type=str,
         nargs="?",
         default="train-data/",
-        help="filepath to list of all prompts for training data"
+        help="filepath to json file with all prompts for training data"
     )
     
     args = parser.parse_args()
     audio_files_dir = args.audio_dir
     train_data_dir = args.train_data_dir
+    prompt_file = args.prompt_file
     audio_files = os.listdir(audio_files_dir)
 
     # generate source and target specgrams
     preprocess_batch(audio_files = audio_files,
                     audio_files_dir = audio_files_dir,
                     output_dir = train_data_dir,
+                    prompt_file_path = prompt_file,
                     fs=44100,
                     verbose=True,   
                     save_wav=True)
