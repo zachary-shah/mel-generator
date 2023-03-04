@@ -6,8 +6,8 @@ import os
 from pathlib import Path
 
 # for spectrum generation
-from spec_segment_gen import generate_specs_batch, segment_audio, write_wav_file
-from external import riffusion_tools
+from audio_segment_utils import segment_audio, write_wav_file
+import riffusion_utils
 import spleeter_utils
 
 # training dataset built off reference data with the following structure
@@ -174,12 +174,11 @@ def preprocess_batch(audio_files, audio_files_dir, output_dir, fs=22050, verbose
 
     create_prompt_file(rootdir=output_dir)
     
+    os.makedirs(output_dir, exist_ok=True)
     segments_dir = os.path.join(output_dir,"segment")
     os.makedirs(segments_dir, exist_ok=True)
-
     targets_dir = os.path.join(output_dir,"target")
     os.makedirs(targets_dir, exist_ok=True)
-
     sources_dir = os.path.join(output_dir,"source")
     os.makedirs(sources_dir, exist_ok=True)
 
@@ -208,7 +207,7 @@ def preprocess_batch(audio_files, audio_files_dir, output_dir, fs=22050, verbose
             target_save_paths.append(Path(os.path.join(targets_dir, f'{audio_filename}_seg{i}.wav')))
     
         # save target spectrograms
-        riffusion_tools.audio_to_images_batch(segment_arr = full_audio_segments,
+        riffusion_utils.audio_to_images_batch(segment_arr = full_audio_segments,
                                              output_paths = target_save_paths,
                                              sample_rate = fs)
         
@@ -216,7 +215,7 @@ def preprocess_batch(audio_files, audio_files_dir, output_dir, fs=22050, verbose
         source_save_paths = []
         for i in range(accompaniment_audio_segments.shape[0]):
             source_save_paths.append(Path(os.path.join(sources_dir, f'{audio_filename}_seg{i}.wav')))
-        riffusion_tools.audio_to_images_batch(segment_arr = accompaniment_audio_segments,
+        riffusion_utils.audio_to_images_batch(segment_arr = accompaniment_audio_segments,
                                              output_paths = source_save_paths,
                                              sample_rate = fs)
         

@@ -6,6 +6,7 @@ import random
 import typing as T
 from multiprocessing.pool import ThreadPool
 from pathlib import Path
+import sys
 
 import argh
 import numpy as np
@@ -18,7 +19,6 @@ sys.path.append('../riffusion-reference/')
 
 from riffusion.spectrogram_image_converter import SpectrogramImageConverter
 from riffusion.spectrogram_params import SpectrogramParams
-from riffusion.util import image_util
 
 
 def audio_to_images_batch(
