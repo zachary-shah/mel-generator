@@ -39,7 +39,6 @@ def separate_audio(inp_audio_path, fs, stem_num=2):
     pred_audio_stem["accompaniment"] = librosa.to_mono(pred_audio_stem["accompaniment"].T)
     pred_audio_stem["vocals"] = librosa.to_mono(pred_audio_stem["vocals"].T)
     
-    
     return pred_audio_stem
 
 
@@ -54,8 +53,8 @@ def debug_audio_pred_dict(pred_audio_stem, stem_name, fs):
     sf.write(f'debug/debug_{stem_name}.wav', desired_stem, samplerate=int(fs))
 
 if __name__ ==  '__main__':
-    test_file_path = "C:/Users/mwang/Desktop/lora/mel-generator/pop-data/pop.00000.wav"
-    test_file_path = "C:/Users/mwang/Desktop/lora/mel-generator/playground/output_stems/pop.00000/accompaniment.wav"
+    test_file_path = "../pop-data/pop.00000.wav"
+    # test_file_path = "../playground/output_stems/pop.00000/accompaniment.wav"
 
     fs = 44.1e3
     

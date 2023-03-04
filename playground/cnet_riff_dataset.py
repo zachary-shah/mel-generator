@@ -114,7 +114,10 @@ def preprocess_batch(audio_files, audio_files_dir, output_dir, fs=22050, verbose
         accompaniment_audio = splits['accompaniment']
         full_audio = splits['full_audio']
         vocal_audio = splits['vocals']
-
+        
+        write_wav_file(accompaniment_audio, os.path.join("tmp/", f'{audio_filename}_seg_test_bgnd.wav'), fs=fs,  verbose=verbose)
+        write_wav_file(vocal_audio, os.path.join("tmp/", f'{audio_filename}_seg_test_voc.wav'), fs=fs,  verbose=verbose)
+        write_wav_file(full_audio, os.path.join("tmp/", f'{audio_filename}_seg_test_full.wav'), fs=fs,  verbose=verbose)
 
         # get audio segments with pitch augmentation on (should be 72 segments total)
         full_audio_segments = segment_audio(full_audio, fs=fs, num_segments=5, pitch_augment=True)

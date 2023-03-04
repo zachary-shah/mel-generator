@@ -16,8 +16,8 @@ if __name__ ==  '__main__':
     preprocess_batch(audio_files = audio_files,
                     audio_files_dir = audio_files_dir,
                     output_dir = dataset_dir,
-                    fs=22050,
-                    verbose=True,
+                    fs=44100,
+                    verbose=True,   
                     save_wav=True)
 
     # collect all training data into training object
