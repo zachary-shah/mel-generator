@@ -1,27 +1,53 @@
-
+import argparse, os, sys, glob
 import matplotlib.pyplot as plt
 import numpy as np
 from cnet_riff_dataset import CnetRiffDataset, preprocess_batch
 
 # parameters
 
-if __name__ ==  '__main__':
+def main():
     # names of files to segment
-    audio_files = ['pop.00000.wav', 'pop.00003.wav']
-    # folder where raw audio files are located in
-    audio_files_dir = "../pop-data/"
-    # where to output everything to
-    dataset_dir = "test_dataset_full_pipeline"
+    parser = argparse.ArgumentParser()
 
+    parser.add_argument(
+        "--audio_dir",
+        type=str,
+        nargs="?",
+        default="../pop-data/",
+        help="directory where all training .wav files located. will use every audio file in directory for training."
+    )
+
+    parser.add_argument(
+        "--train_data_dir",
+        type=str,
+        nargs="?",
+        default="train-data/",
+        help="directory to output training dataset to"
+    )
+
+    parser.add_argument(
+        "--prompt_file",
+        type=str,
+        nargs="?",
+        default="train-data/",
+        help="filepath to list of all prompts for training data"
+    )
+    
+    args = parser.parse_args()
+    audio_files_dir = args.audio_dir
+    train_data_dir = args.train_data_dir
+    audio_files = os.listdir(audio_files_dir)
+
+    # generate source and target specgrams
     preprocess_batch(audio_files = audio_files,
                     audio_files_dir = audio_files_dir,
-                    output_dir = dataset_dir,
+                    output_dir = train_data_dir,
                     fs=44100,
                     verbose=True,   
                     save_wav=True)
 
     # collect all training data into training object
-    train_dataset = CnetRiffDataset(dataset_dir)
+    train_dataset = CnetRiffDataset(train_data_dir)
 
     # show sample contents if desired
     print("Sample contents of dataset")
@@ -33,3 +59,7 @@ if __name__ ==  '__main__':
     plt.title("Source (canny edges)")
     plt.show()
     print("prompt:", item['txt'])
+
+if __name__ ==  '__main__':
+    main()
+

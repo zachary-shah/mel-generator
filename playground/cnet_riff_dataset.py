@@ -47,7 +47,7 @@ class CnetRiffDataset(Dataset):
         # # Normalize target images to [-1, 1].
         target = (target_mod.astype(np.float32) / 127.5) - 1.0
 
-        #TODO: fix normalizations
+        #TODO: fix normalizations or undo later
 
         return dict(jpg=target, txt=prompt, hint=source)
 
@@ -93,7 +93,9 @@ def generate_and_replace_canny_source(file_path, low_thres=100, high_thres=200):
     return
 
 # given audio files, save all targets, source, and prompt file
-def preprocess_batch(audio_files, audio_files_dir, output_dir, fs=22050, verbose=False, save_wav=False):
+def preprocess_batch(audio_files, audio_files_dir, output_dir, prompt_file_path=None, fs=44100, verbose=False, save_wav=False):
+
+    assert prompt_file_path is not None
 
     create_prompt_file(rootdir=output_dir)
     
@@ -104,6 +106,16 @@ def preprocess_batch(audio_files, audio_files_dir, output_dir, fs=22050, verbose
     os.makedirs(targets_dir, exist_ok=True)
     sources_dir = os.path.join(output_dir,"source")
     os.makedirs(sources_dir, exist_ok=True)
+
+    # get all prompts in prompt_file as dictionary
+    prompt_dict = {}
+    p_count = 0
+    with open(prompt_file_path, 'r') as prompt_file:
+        for line in prompt_file:
+            data = json.loads(line)
+            prompt_dict[data['file']] = data['prompt']
+            p_count += 1
+    if verbose: print(f"Read {p_count} files from {prompt_file_path}.")
 
     for audio_file in audio_files:
         audio_filename = audio_file[:audio_file.index(".wav")]
@@ -125,13 +137,13 @@ def preprocess_batch(audio_files, audio_files_dir, output_dir, fs=22050, verbose
                 if np.linalg.norm(vocal_audio_segments[i]) > np.linalg.norm(accompaniment_audio_segment)*0.1:
                     acceptable_inds.append(i)
                 else:
-                    if verbose: print("Vocals not detected, segement " + str(i))
+                    if verbose: print("Vocals not detected in segement " + str(i))
         full_audio_segments = full_audio_segments[acceptable_inds]
         accompaniment_audio_segments = accompaniment_audio_segments[acceptable_inds]
         vocal_audio_segments = vocal_audio_segments[acceptable_inds]
 
         if verbose:
-            print(f"total number of segments for {audio_filename}: {full_audio_segments.shape[0]}")
+            print(f"Total number of segments for {audio_filename}: {full_audio_segments.shape[0]}")
 
         # generally, don't save .wav files as this is will require too much storage
         if save_wav:
@@ -167,11 +179,21 @@ def preprocess_batch(audio_files, audio_files_dir, output_dir, fs=22050, verbose
         for path in source_save_paths:
             generate_and_replace_canny_source(path, low_thres=100, high_thres=200)
         
-        # append to prompt file
+        
+        # get prompt for this song
+        if audio_file in prompt_dict:
+            song_prompt = prompt_dict[audio_file]
+        else:
+            song_prompt = "Generate a pop melody."
+        
+        if verbose:
+            print(f"  Using prompt \'{song_prompt}\' for file {audio_file}.")
+
+        # append to prompt file for all segments
         append_to_prompt_file(rootdir=output_dir, 
                             source_filepaths=source_save_paths, 
                             target_filepaths=target_save_paths,
-                            prompt="Generate a pop melody.",
+                            prompt=song_prompt,
                             verbose=verbose)
     if verbose:
         print("Segmentation and spectrogram generation complete.")

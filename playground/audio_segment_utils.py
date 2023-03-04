@@ -8,27 +8,29 @@ import sys
 default_fs = 44100
 
 # Notes on terminology:
-# - clip: 5 second (or some fixed length) audio
+# - clip: 5.12 second (or some fixed length) audio
 # - stem: a specific musical component of a given clip
 # - segment: synonymous with stem
-
 def read_wav_file(file_path, fs):
     audio_data, sr = librosa.load(file_path, sr=fs, mono=True)
 
-    # Split audio into 5 second clips (TODO: remove length hardcoding, make CL arg)
-    num_samples_per_segment = 5 * fs 
-    num_segments = int(np.ceil(len(audio_data) / num_samples_per_segment))
-    audio_segments = librosa.util.frame(audio_data, frame_length=num_samples_per_segment, hop_length=num_samples_per_segment).T
+    # Split audio into 6 5.12 second clips (TODO: remove length hardcoding, make CL arg)
+    num_samples_per_segment = int(5.110* fs)
+    num_segments = 6
+    hop_len = int(np.floor((len(audio_data) - num_samples_per_segment) / (num_segments - 1)))
+    audio_segments = librosa.util.frame(audio_data, frame_length=num_samples_per_segment, hop_length=hop_len).T
 
     return audio_segments
 
-def segment_audio(audio_data, fs=22050, num_segments=5, pitch_augment=True):
-    # Split audio into 5 second clips (TODO: remove length hardcoding, make CL arg)
-    num_samples_per_segment = num_segments * fs 
-    num_segments = int(np.ceil(len(audio_data) / num_samples_per_segment))
-    
-    #print(f"segment_audio: shape: {np.shape(audio_data)}")
-    audio_segments = librosa.util.frame(audio_data.T, frame_length=num_samples_per_segment, hop_length=num_samples_per_segment).T
+def segment_audio(audio_data, fs=44100, num_segments=6, pitch_augment=True):
+    # make audio data one channel
+    audio_data = np.reshape(audio_data, (len(audio_data),))
+
+    # Split audio into 5.12 second clips
+    num_samples_per_segment = int(5.110* fs)
+    hop_len = int(np.floor((len(audio_data) - num_samples_per_segment) / (num_segments - 1)))
+
+    audio_segments = librosa.util.frame(audio_data, frame_length=num_samples_per_segment, hop_length=hop_len).T
 
     # modulate through 12 keys
     if pitch_augment:
