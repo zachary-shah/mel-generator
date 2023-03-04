@@ -191,16 +191,24 @@ def preprocess_batch(audio_files, audio_files_dir, output_dir, fs=22050, verbose
         accompaniment_audio = splits['accompaniment']
         full_audio = splits['full_audio']
 
+
+
         # get audio segments with pitch augmentation on (should be 72 segments total)
         full_audio_segments = segment_audio(full_audio, fs=fs, num_segments=5, pitch_augment=True)
         accompaniment_audio_segments = segment_audio(accompaniment_audio, fs=fs, num_segments=5, pitch_augment=True)
 
+
         # generally, don't save .wav files as this is will require too much storage
         if save_wav:
-            for i, segment in enumerate(full_audio_segments):
-                write_wav_file(segment, os.path.join(segments_dir, f'{audio_filename}_seg{i}_full.wav'), fs=fs,  verbose=verbose)
-            for i, segment in enumerate(accompaniment_audio_segments):
-                write_wav_file(segment, os.path.join(segments_dir, f'{audio_filename}_seg{i}_bgnd.wav'), fs=fs,  verbose=verbose)
+            for i, accompaniment_audio_segment in enumerate(accompaniment_audio_segments):
+                full_audio_segment = full_audio_segments[i]
+
+                if np.linalg.norm(full_audio_segment)*0.9 > np.linalg.norm(accompaniment_audio_segment):
+                    write_wav_file(accompaniment_audio_segment, os.path.join(segments_dir, f'{audio_filename}_seg{i}_bgnd.wav'), fs=fs,  verbose=verbose)
+                    write_wav_file(full_audio_segments[i], os.path.join(segments_dir, f'{audio_filename}_seg{i}_full.wav'), fs=fs,  verbose=verbose)
+                else:
+                    print("Vocals not detected, segement " + str(i))
+
         
         # make paths for saving targets
         target_save_paths = []
