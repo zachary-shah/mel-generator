@@ -42,6 +42,8 @@ def separate_audio(inp_audio_path, fs, stem_num=2):
     
     return pred_audio_stem
 
+
+    
 def debug_audio_pred_dict(pred_audio_stem, stem_name, fs):
     if stem_name not in pred_audio_stem.keys():
         logging.error(f"Cannot debug stem of type {stem_name}: valid keys are {pred_audio_stem.keys()}")
@@ -52,7 +54,9 @@ def debug_audio_pred_dict(pred_audio_stem, stem_name, fs):
     sf.write(f'debug/debug_{stem_name}.wav', desired_stem, samplerate=int(fs))
 
 if __name__ ==  '__main__':
-    test_file_path = "pop_audio_segments/segment_0.wav"
+    test_file_path = "C:/Users/mwang/Desktop/lora/mel-generator/pop-data/pop.00000.wav"
+    test_file_path = "C:/Users/mwang/Desktop/lora/mel-generator/playground/output_stems/pop.00000/accompaniment.wav"
+
     fs = 44.1e3
     
     logging.basicConfig(level=logging.INFO)
@@ -62,6 +66,14 @@ if __name__ ==  '__main__':
     
     info = separate_audio(test_file_path, fs)
     logging.info("Separated audio to directory")
+
+    print("Vocal Norm:")
+    print(np.linalg.norm(info["vocals"]))
+    print("Full Audio Norm:")
+    print(np.linalg.norm(info["full_audio"]))
+    print("Accompaniment Norm:")
+    print(np.linalg.norm(info["accompaniment"]))
+
     
     # logging.info(info["vocals"][:100])
     # logging.info(info["accompaniment"][:100])

@@ -113,17 +113,27 @@ def preprocess_batch(audio_files, audio_files_dir, output_dir, fs=22050, verbose
         splits = spleeter_utils.separate_audio(os.path.join(audio_files_dir, audio_file), fs=fs, stem_num=2)
         accompaniment_audio = splits['accompaniment']
         full_audio = splits['full_audio']
+        vocal_audio = splits['vocals']
+
 
         # get audio segments with pitch augmentation on (should be 72 segments total)
         full_audio_segments = segment_audio(full_audio, fs=fs, num_segments=5, pitch_augment=True)
         accompaniment_audio_segments = segment_audio(accompaniment_audio, fs=fs, num_segments=5, pitch_augment=True)
+        vocal_audio_segments = segment_audio(vocal_audio, fs=fs, num_segments=5, pitch_augment=True)
+
 
         # generally, don't save .wav files as this is will require too much storage
         if save_wav:
-            for i, segment in enumerate(full_audio_segments):
-                write_wav_file(segment, os.path.join(segments_dir, f'{audio_filename}_seg{i}_full.wav'), fs=fs,  verbose=verbose)
-            for i, segment in enumerate(accompaniment_audio_segments):
-                write_wav_file(segment, os.path.join(segments_dir, f'{audio_filename}_seg{i}_bgnd.wav'), fs=fs,  verbose=verbose)
+            for i, accompaniment_audio_segment in enumerate(accompaniment_audio_segments):
+                full_audio_segment = full_audio_segments[i]
+                vocal_audio_segment = vocal_audio_segments[i]
+
+                if np.linalg.norm(vocal_audio_segment) > np.linalg.norm(accompaniment_audio_segment)*0.1:
+                    write_wav_file(accompaniment_audio_segment, os.path.join(segments_dir, f'{audio_filename}_seg{i}_bgnd.wav'), fs=fs,  verbose=verbose)
+                    write_wav_file(full_audio_segment, os.path.join(segments_dir, f'{audio_filename}_seg{i}_full.wav'), fs=fs,  verbose=verbose)
+                else:
+                    print("Vocals not detected, segement " + str(i))
+
         
         # make paths for saving targets
         target_save_paths = []
