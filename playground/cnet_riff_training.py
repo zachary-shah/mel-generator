@@ -14,22 +14,26 @@ from cldm.model import create_model, load_state_dict
 from cnet_riff_dataset import CnetRiffDataset
 from ControlNet import tool_add_control
 
+from huggingface_hub import hf_hub_download
 
-# TODO: add control to riffusion and svae to resume_path
+cntrl_riff_path = "pretrained_models/control_riffusion_ini.ckpt"
+
+# get path of riffusion model
+riffusion_path = hf_hub_download(repo_id="riffusion/riffusion-model-v1", filename="riffusion-model-v1.ckpt")
+
+# add control to riffusion and save to resume_path
+tool_add_control(riffusion_path, cntrl_riff_path)
 
 # Configs
-resume_path = './models/control_sd15_ini.ckpt'
-
 batch_size = 4
 logger_freq = 300
 learning_rate = 1e-5
-sd_locked = True
+sd_locked = True # MAY WANT TO TRY CHANGING THIS TO FALSE. then lower LR to 2e-6
 only_mid_control = False
-
 
 # load dataset. Pytorch Lightning will automatically move it to GPUs.
 model = create_model('./models/cldm_v15.yaml').cpu()
-model.load_state_dict(load_state_dict(resume_path, location='cpu'))
+model.load_state_dict(load_state_dict(cntrl_riff_path, location='cpu'))
 model.learning_rate = learning_rate
 model.sd_locked = sd_locked
 model.only_mid_control = only_mid_control

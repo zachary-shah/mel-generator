@@ -59,18 +59,22 @@ def main():
                     save_wav=False)
 
     # collect all training data into training object
-    train_dataset = CnetRiffDataset(train_data_dir)
+    print("Preprocesing complete!")
 
-    # show sample contents if desired
-    print("Sample contents of dataset")
-    item = train_dataset[0]
-    plt.imshow((item['jpg'] + 1 )/ 2)
-    plt.title("Target spectrogram")
-    plt.figure()
-    plt.imshow(item['hint'])
-    plt.title("Source (canny edges)")
-    plt.show()
-    print("prompt:", item['txt'])
+    show_sample = False
+    if show_sample:
+        train_dataset = CnetRiffDataset(train_data_dir)
+
+        # show sample contents if desired
+        print("Sample contents of dataset")
+        item = train_dataset[0]
+        plt.imshow((item['jpg'] + 1 )/ 2)
+        plt.title("Target spectrogram")
+        plt.figure()
+        plt.imshow(item['hint'])
+        plt.title("Source (canny edges)")
+        plt.show()
+        print("prompt:", item['txt'])
 
 if __name__ ==  '__main__':
     main()

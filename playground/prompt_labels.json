@@ -1,39 +1,39 @@
-{"file": "blues.00000.wav", "prompt": "Generate a blues melody."}
-{"file": "blues.00001.wav", "prompt": "Generate a blues melody."}
-{"file": "blues.00002.wav", "prompt": "Generate a blues melody."}
-{"file": "blues.00003.wav", "prompt": "Generate a blues melody."}
-{"file": "blues.00005.wav", "prompt": "Generate a blues melody."}
-{"file": "blues.00006.wav", "prompt": "Generate a blues melody."}
-{"file": "blues.00007.wav", "prompt": "Generate a blues melody."}
-{"file": "blues.00008.wav", "prompt": "Generate a blues melody."}
-{"file": "blues.00009.wav", "prompt": "Generate a blues melody."}
-{"file": "country.00000.wav", "prompt": "Generate a country melody."}
-{"file": "country.00001.wav", "prompt": "Generate a country melody."}
-{"file": "country.00002.wav", "prompt": "Generate a country melody."}
-{"file": "country.00003.wav", "prompt": "Generate a country melody."}
-{"file": "country.00004.wav", "prompt": "Generate a country melody."}
-{"file": "country.00005.wav", "prompt": "Generate a country melody."}
-{"file": "country.00006.wav", "prompt": "Generate a country melody."}
-{"file": "country.00007.wav", "prompt": "Generate a country melody."}
-{"file": "country.00008.wav", "prompt": "Generate a country melody."}
-{"file": "country.00009.wav", "prompt": "Generate a country melody."}
-{"file": "country.00010.wav", "prompt": "Generate a country melody."}
-{"file": "country.00011.wav", "prompt": "Generate a country melody."}
-{"file": "country.00012.wav", "prompt": "Generate a country melody."}
-{"file": "country.00013.wav", "prompt": "Generate a country melody."}
-{"file": "country.00014.wav", "prompt": "Generate a country melody."}
-{"file": "country.00015.wav", "prompt": "Generate a country melody."}
-{"file": "country.00016.wav", "prompt": "Generate a country melody."}
-{"file": "country.00018.wav", "prompt": "Generate a country melody."}
-{"file": "country.00019.wav", "prompt": "Generate a country melody."}
-{"file": "country.00020.wav", "prompt": "Generate a country melody."}
-{"file": "country.00021.wav", "prompt": "Generate a country melody."}
-{"file": "country.00022.wav", "prompt": "Generate a country melody."}
-{"file": "country.00023.wav", "prompt": "Generate a country melody."}
-{"file": "country.00024.wav", "prompt": "Generate a country melody."}
-{"file": "country.00025.wav", "prompt": "Generate a country melody."}
-{"file": "country.00026.wav", "prompt": "Generate a country melody."}
-{"file": "country.00027.wav", "prompt": "Generate a country melody."}
+{"file": "blues.00000.wav", "prompt": "Generate a soulful baritone male vocal blues melody."}
+{"file": "blues.00001.wav", "prompt": "Generate a slow soulful male vocal blues melody."}
+{"file": "blues.00002.wav", "prompt": "Generate a tenor male vocal blues melody."}
+{"file": "blues.00003.wav", "prompt": "Generate a sparse male vocal blues melody with spoken lyrics."}
+{"file": "blues.00005.wav", "prompt": "Generate a sparse emotional male vocal blues melody."}
+{"file": "blues.00006.wav", "prompt": "Generate a male vocal blues melody."}
+{"file": "blues.00007.wav", "prompt": "Generate a male vocal blues melody."}
+{"file": "blues.00008.wav", "prompt": "Generate a male vocal blues melody."}
+{"file": "blues.00009.wav", "prompt": "Generate a sparse and slow blues melody sung by two male voices."}
+{"file": "country.00000.wav", "prompt": "Generate a female vocal country melody with a male vocal counterpart."}
+{"file": "country.00001.wav", "prompt": "Generate a female vocal country melody with a female vocal counterpart."}
+{"file": "country.00002.wav", "prompt": "Generate a female vocal bluegrass melody."}
+{"file": "country.00003.wav", "prompt": "Generate a sad male vocal country melody."}
+{"file": "country.00004.wav", "prompt": "Generate a female vocal country melody with a female vocal counterpart."}
+{"file": "country.00005.wav", "prompt": "Generate a female vocal country melody."}
+{"file": "country.00006.wav", "prompt": "Generate a male vocal country melody."}
+{"file": "country.00007.wav", "prompt": "Generate a male vocal country melody with a male vocal counterpart."}
+{"file": "country.00008.wav", "prompt": "Generate a male alto vocal country melody."}
+{"file": "country.00009.wav", "prompt": "Generate a male vocal country melody with a twangy voice."}
+{"file": "country.00010.wav", "prompt": "Generate an oldies male vocal country melody."}
+{"file": "country.00011.wav", "prompt": "Generate a female vocal bluegrass melody."}
+{"file": "country.00012.wav", "prompt": "Generate a male vocal country melody."}
+{"file": "country.00013.wav", "prompt": "Generate a female vocal country melody."}
+{"file": "country.00014.wav", "prompt": "Generate a country melody sung by a chorus of male and female singers."}
+{"file": "country.00015.wav", "prompt": "Generate a male vocal country melody."}
+{"file": "country.00016.wav", "prompt": "Generate an oldies male vocal country melody in the style of Johnny Cash."}
+{"file": "country.00018.wav", "prompt": "Generate a female country melody with bluegrass influences."}
+{"file": "country.00019.wav", "prompt": "Generate an slow oldies male vocal country melody."}
+{"file": "country.00020.wav", "prompt": "Generate an alto male vocal country melody."}
+{"file": "country.00021.wav", "prompt": "Generate a male vocal swing melody."}
+{"file": "country.00022.wav", "prompt": "Generate a wistful oldies male vocal country melody."}
+{"file": "country.00023.wav", "prompt": "Generate a slow and sad male vocal country melody."}
+{"file": "country.00024.wav", "prompt": "Generate a twangy male vocal bluegrass melody."}
+{"file": "country.00025.wav", "prompt": "Generate a vocal country melody with a male and female harmony."}
+{"file": "country.00026.wav", "prompt": "Generate a male vocal bluegrass melody."}
+{"file": "country.00027.wav", "prompt": "Generate a twangy male vocal country melody."}
 {"file": "pop.00000.wav", "prompt": "Generate a sad female vocal pop melody."}
 {"file": "pop.00001.wav", "prompt": "Generate a groovy disco vocal pop melody."}
 {"file": "pop.00002.wav", "prompt": "Generate an uplifting female soprano vocal pop melody."}
@@ -132,47 +132,47 @@
 {"file": "pop.00097.wav", "prompt": "Generate a groovy female alto vocal pop melody."}
 {"file": "pop.00098.wav", "prompt": "Generate a groovy female vocal 80's style pop melody."}
 {"file": "pop.00099.wav", "prompt": "Generate a slow female vocal pop melody with lots of vocalization and doo doos."}
-{"file": "reggae.00000.wav", "prompt": "Generate a reggae melody."}
-{"file": "reggae.00002.wav", "prompt": "Generate a reggae melody."}
-{"file": "reggae.00003.wav", "prompt": "Generate a reggae melody."}
-{"file": "reggae.00004.wav", "prompt": "Generate a reggae melody."}
-{"file": "reggae.00005.wav", "prompt": "Generate a reggae melody."}
-{"file": "reggae.00006.wav", "prompt": "Generate a reggae melody."}
-{"file": "reggae.00007.wav", "prompt": "Generate a reggae melody."}
-{"file": "reggae.00008.wav", "prompt": "Generate a reggae melody."}
-{"file": "reggae.00009.wav", "prompt": "Generate a reggae melody."}
-{"file": "reggae.00010.wav", "prompt": "Generate a reggae melody."}
-{"file": "reggae.00011.wav", "prompt": "Generate a reggae melody."}
-{"file": "reggae.00012.wav", "prompt": "Generate a reggae melody."}
-{"file": "reggae.00013.wav", "prompt": "Generate a reggae melody."}
-{"file": "reggae.00014.wav", "prompt": "Generate a reggae melody."}
-{"file": "reggae.00015.wav", "prompt": "Generate a reggae melody."}
-{"file": "reggae.00016.wav", "prompt": "Generate a reggae melody."}
-{"file": "reggae.00017.wav", "prompt": "Generate a reggae melody."}
-{"file": "reggae.00018.wav", "prompt": "Generate a reggae melody."}
-{"file": "reggae.00019.wav", "prompt": "Generate a reggae melody."}
-{"file": "reggae.00020.wav", "prompt": "Generate a reggae melody."}
-{"file": "rock.00000.wav", "prompt": "Generate a rock melody."}
-{"file": "rock.00002.wav", "prompt": "Generate a rock melody."}
-{"file": "rock.00003.wav", "prompt": "Generate a rock melody."}
-{"file": "rock.00004.wav", "prompt": "Generate a rock melody."}
-{"file": "rock.00005.wav", "prompt": "Generate a rock melody."}
-{"file": "rock.00006.wav", "prompt": "Generate a rock melody."}
-{"file": "rock.00007.wav", "prompt": "Generate a rock melody."}
-{"file": "rock.00010.wav", "prompt": "Generate a rock melody."}
-{"file": "rock.00011.wav", "prompt": "Generate a rock melody."}
-{"file": "rock.00012.wav", "prompt": "Generate a rock melody."}
-{"file": "rock.00016.wav", "prompt": "Generate a rock melody."}
-{"file": "rock.00017.wav", "prompt": "Generate a rock melody."}
-{"file": "rock.00018.wav", "prompt": "Generate a rock melody."}
-{"file": "rock.00020.wav", "prompt": "Generate a rock melody."}
-{"file": "rock.00021.wav", "prompt": "Generate a rock melody."}
-{"file": "rock.00023.wav", "prompt": "Generate a rock melody."}
-{"file": "rock.00025.wav", "prompt": "Generate a rock melody."}
-{"file": "rock.00026.wav", "prompt": "Generate a rock melody."}
-{"file": "rock.00027.wav", "prompt": "Generate a rock melody."}
-{"file": "rock.00028.wav", "prompt": "Generate a rock melody."}
-{"file": "rock.00029.wav", "prompt": "Generate a rock melody."}
-{"file": "rock.00030.wav", "prompt": "Generate a rock melody."}
-{"file": "rock.00031.wav", "prompt": "Generate a rock melody."}
-{"file": "rock.00032.wav", "prompt": "Generate a rock melody."}
+{"file": "reggae.00000.wav", "prompt": "Generate a male vocal reggae melody."}
+{"file": "reggae.00002.wav", "prompt": "Generate a male vocal funky reggae melody."}
+{"file": "reggae.00003.wav", "prompt": "Generate a male vocal reggae melody with a chorus accompaniment."}
+{"file": "reggae.00004.wav", "prompt": "Generate a male vocal reggae melody."}
+{"file": "reggae.00005.wav", "prompt": "Generate a male vocal reggae melody."}
+{"file": "reggae.00006.wav", "prompt": "Generate a male vocal reggae melody with a chorus accompaniment."}
+{"file": "reggae.00007.wav", "prompt": "Generate a male vocal reggae melody with a light chorus accompaniment."}
+{"file": "reggae.00008.wav", "prompt": "Generate a male vocal reggae melody."}
+{"file": "reggae.00009.wav", "prompt": "Generate a light male vocal reggae melody."}
+{"file": "reggae.00010.wav", "prompt": "Generate a male vocal pop reggae melody."}
+{"file": "reggae.00011.wav", "prompt": "Generate a male vocal reggae melody."}
+{"file": "reggae.00012.wav", "prompt": "Generate a male vocal reggae melody with a chorus accompaniment."}
+{"file": "reggae.00013.wav", "prompt": "Generate a male vocal reggae melody with an alto vocal accompaniment."}
+{"file": "reggae.00014.wav", "prompt": "Generate a male vocal reggae melody."}
+{"file": "reggae.00015.wav", "prompt": "Generate a male vocal reggae melody with sparse vocal accompaniment."}
+{"file": "reggae.00016.wav", "prompt": "Generate a vocal reggae melody sung by a chorus."}
+{"file": "reggae.00017.wav", "prompt": "Generate an alto male vocal reggae melody with sparse vocal accompaniment."}
+{"file": "reggae.00018.wav", "prompt": "Generate a male vocal reggae melody."}
+{"file": "reggae.00019.wav", "prompt": "Generate a male vocal reggae melody with very sparse vocal accompaniment."}
+{"file": "reggae.00020.wav", "prompt": "Generate a male vocal reggae melody with sparse vocal accompaniment."}
+{"file": "rock.00000.wav", "prompt": "Generate a soft male vocal rock melody."}
+{"file": "rock.00002.wav", "prompt": "Generate a soft male vocal rock melody."}
+{"file": "rock.00003.wav", "prompt": "Generate a smooth mael vocal rock melody in the style of Elvis Presley."}
+{"file": "rock.00004.wav", "prompt": "Generate a deep male vocal rock melody."}
+{"file": "rock.00005.wav", "prompt": "Generate a male vocal rock melody with sustained notes."}
+{"file": "rock.00006.wav", "prompt": "Generate a soft male vocal rock melody."}
+{"file": "rock.00007.wav", "prompt": "Generate a soft male vocal rock melody."}
+{"file": "rock.00010.wav", "prompt": "Generate a female vocal rock melody."}
+{"file": "rock.00011.wav", "prompt": "Generate an up-tempo female vocal rock melody."}
+{"file": "rock.00012.wav", "prompt": "Generate a female vocal rock melody."}
+{"file": "rock.00016.wav", "prompt": "Generate a male vocal hard rock melody."}
+{"file": "rock.00017.wav", "prompt": "Generate an alto male vocal rock melody."}
+{"file": "rock.00018.wav", "prompt": "Generate a male vocal rock melody singing Another One Bites The Dust."}
+{"file": "rock.00020.wav", "prompt": "Generate a male vocal rock melody with vocalizations like doo-op."}
+{"file": "rock.00021.wav", "prompt": "Generate a male vocal rock melody with male vocal accompaniment."}
+{"file": "rock.00023.wav", "prompt": "Generate a wistful tenor male vocal rock melody in the style of Freddie Mercury."}
+{"file": "rock.00025.wav", "prompt": "Generate a rhaspy male vocal rock melody."}
+{"file": "rock.00026.wav", "prompt": "Generate a male vocal rock melody."}
+{"file": "rock.00027.wav", "prompt": "Generate a happy male vocal rock melody sung by a chorus with vocalizations like doo-op."}
+{"file": "rock.00028.wav", "prompt": "Generate an uplifting male vocal rock melody sung by a chorus."}
+{"file": "rock.00029.wav", "prompt": "Generate a male vocal rock melody."}
+{"file": "rock.00030.wav", "prompt": "Generate a male vocal pop rock melody."}
+{"file": "rock.00031.wav", "prompt": "Generate a male vocal rock melody."}
+{"file": "rock.00032.wav", "prompt": "Generate a male vocal rock melody."}

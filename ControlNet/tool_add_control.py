@@ -19,7 +19,6 @@ def tool_add_control(input_path, output_path):
             return False, ''
         return True, name[len(parent_name):]
 
-
     model = create_model(config_path='./models/cldm_v15.yaml')
 
     pretrained_weights = torch.load(input_path)

@@ -40,8 +40,6 @@ def separate_audio(inp_audio_path, fs, stem_num=2):
     pred_audio_stem["vocals"] = librosa.to_mono(pred_audio_stem["vocals"].T)
     
     return pred_audio_stem
-
-
     
 def debug_audio_pred_dict(pred_audio_stem, stem_name, fs):
     if stem_name not in pred_audio_stem.keys():
