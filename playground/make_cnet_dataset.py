@@ -3,7 +3,8 @@ import matplotlib.pyplot as plt
 import numpy as np
 from cnet_riff_dataset import CnetRiffDataset, preprocess_batch
 
-# parameters
+# how to run:
+# python make_cnet_dataset.py --audio_dir "../pop-data/" --train_data_dir "train-data/" --prompt_file "prompt_labels.json" --limit 2
 
 def main():
     # names of files to segment
@@ -29,24 +30,33 @@ def main():
         "--prompt_file",
         type=str,
         nargs="?",
-        default="train-data/",
+        default="prompt_labels.json",
         help="filepath to json file with all prompts for training data"
     )
+
+    parser.add_argument(
+        "--limit",
+        type=int,
+        nargs="?",
+        default="-1",
+        help="limit of number of files to process. -1 for no limit"
+    ) 
     
     args = parser.parse_args()
     audio_files_dir = args.audio_dir
     train_data_dir = args.train_data_dir
     prompt_file = args.prompt_file
+    limit = args.limit
     audio_files = os.listdir(audio_files_dir)
 
     # generate source and target specgrams
-    preprocess_batch(audio_files = audio_files,
+    preprocess_batch(audio_files = audio_files[0:limit],
                     audio_files_dir = audio_files_dir,
                     output_dir = train_data_dir,
                     prompt_file_path = prompt_file,
                     fs=44100,
                     verbose=True,   
-                    save_wav=True)
+                    save_wav=False)
 
     # collect all training data into training object
     train_dataset = CnetRiffDataset(train_data_dir)
@@ -64,4 +74,3 @@ def main():
 
 if __name__ ==  '__main__':
     main()
-

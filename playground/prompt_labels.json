@@ -7,7 +7,6 @@
 {"file": "blues.00007.wav", "prompt": "Generate a blues melody."}
 {"file": "blues.00008.wav", "prompt": "Generate a blues melody."}
 {"file": "blues.00009.wav", "prompt": "Generate a blues melody."}
-
 {"file": "country.00000.wav", "prompt": "Generate a country melody."}
 {"file": "country.00001.wav", "prompt": "Generate a country melody."}
 {"file": "country.00002.wav", "prompt": "Generate a country melody."}
@@ -35,7 +34,6 @@
 {"file": "country.00025.wav", "prompt": "Generate a country melody."}
 {"file": "country.00026.wav", "prompt": "Generate a country melody."}
 {"file": "country.00027.wav", "prompt": "Generate a country melody."}
-
 {"file": "pop.00000.wav", "prompt": "Generate a sad female vocal pop melody."}
 {"file": "pop.00001.wav", "prompt": "Generate a groovy disco vocal pop melody."}
 {"file": "pop.00002.wav", "prompt": "Generate an uplifting female soprano vocal pop melody."}
@@ -134,7 +132,6 @@
 {"file": "pop.00097.wav", "prompt": "Generate a groovy female alto vocal pop melody."}
 {"file": "pop.00098.wav", "prompt": "Generate a groovy female vocal 80's style pop melody."}
 {"file": "pop.00099.wav", "prompt": "Generate a slow female vocal pop melody with lots of vocalization and doo doos."}
-
 {"file": "reggae.00000.wav", "prompt": "Generate a reggae melody."}
 {"file": "reggae.00002.wav", "prompt": "Generate a reggae melody."}
 {"file": "reggae.00003.wav", "prompt": "Generate a reggae melody."}
@@ -155,7 +152,6 @@
 {"file": "reggae.00018.wav", "prompt": "Generate a reggae melody."}
 {"file": "reggae.00019.wav", "prompt": "Generate a reggae melody."}
 {"file": "reggae.00020.wav", "prompt": "Generate a reggae melody."}
-
 {"file": "rock.00000.wav", "prompt": "Generate a rock melody."}
 {"file": "rock.00002.wav", "prompt": "Generate a rock melody."}
 {"file": "rock.00003.wav", "prompt": "Generate a rock melody."}
@@ -180,10 +176,3 @@
 {"file": "rock.00030.wav", "prompt": "Generate a rock melody."}
 {"file": "rock.00031.wav", "prompt": "Generate a rock melody."}
 {"file": "rock.00032.wav", "prompt": "Generate a rock melody."}
-
-
-
-
-
-
-
