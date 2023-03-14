@@ -1,5 +1,6 @@
 import torch
 import numpy as np
+import torch.nn as nn
 import matplotlib.pyplot as plt
 
 
@@ -46,3 +47,13 @@ def plot_specgram(waveform, sample_rate, title="Spectrogram"):
     plt.xlabel("Time (s)")
     plt.ylabel("Frequency (Hz)")
     plt.show(block=False)
+
+
+def envelope_distance(predicted_binaural, gt_binaural):
+    #channel1
+    pred_env_channel1 = np.abs(hilbert(predicted_binaural))
+    gt_env_channel1 = np.abs(hilbert(gt_binaural))
+    channel1_distance = np.sqrt(np.mean((gt_env_channel1 - pred_env_channel1)**2))
+    #sum the distance between two channels
+    envelope_distance = channel1_distance
+    return float(envelope_distance)
